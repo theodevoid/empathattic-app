@@ -1,5 +1,5 @@
 {
-  "name": "@acme/db",
+  "name": "@empathattic/db",
   "version": "0.1.0",
   "main": "./index.ts",
   "types": "./index.ts",
@@ -12,10 +12,14 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@prisma/client": "^4.15.0"
+    "@prisma/client": "^4.15.0",
+    "@types/pg": "^8.10.2",
+    "drizzle-orm": "^0.26.5",
+    "pg": "^8.11.0"
   },
   "devDependencies": {
     "dotenv-cli": "^7.2.1",
+    "drizzle-kit": "^0.18.1",
     "prisma": "^4.15.0",
     "typescript": "^5.1.3"
   }

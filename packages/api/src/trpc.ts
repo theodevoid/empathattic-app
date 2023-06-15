@@ -11,8 +11,8 @@ import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-import { getServerSession, type Session } from "@acme/auth";
-import { prisma } from "@acme/db";
+import { createPagesServerClient, type Session } from "@empathattic/auth";
+import { prisma } from "@empathattic/db";
 
 /**
  * 1. CONTEXT
@@ -49,10 +49,12 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
  * @link https://trpc.io/docs/context
  */
 export const createTRPCContext = async (opts: CreateNextContextOptions) => {
-  const { req, res } = opts;
+  const supabase = createPagesServerClient(opts, {
+    supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
+  });
 
-  // Get the session from the server using the unstable_getServerSession wrapper function
-  const session = await getServerSession({ req, res });
+  const { session } = (await supabase.auth.getSession()).data;
 
   return createInnerTRPCContext({
     session,
