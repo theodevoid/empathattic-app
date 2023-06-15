@@ -12,7 +12,7 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { createPagesServerClient, type Session } from "@empathattic/auth";
-import { prisma } from "@empathattic/db";
+import { db } from "@empathattic/db";
 
 /**
  * 1. CONTEXT
@@ -39,7 +39,7 @@ type CreateContextOptions = {
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
-    prisma,
+    db,
   };
 };
 

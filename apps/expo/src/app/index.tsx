@@ -10,9 +10,14 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack, useRouter } from "expo-router";
 
+import { api } from "~/utils/api";
 import { supabase } from "~/lib/supabase";
 
 const Index = () => {
+  const { data } = api.post.all.useQuery();
+
+  console.log(data);
+
   const googleSignIn = async () => {
     const res = await supabase.auth.signInWithOAuth({
       provider: "google",

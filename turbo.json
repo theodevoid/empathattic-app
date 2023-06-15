@@ -34,6 +34,7 @@
   "globalEnv": [
     "CI",
     "DATABASE_URL",
+    "DATABASE_POOL",
     "EXPO_ROUTER_APP_ROOT",
     "NODE_ENV",
     "SKIP_ENV_VALIDATION",
