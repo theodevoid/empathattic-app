@@ -12,9 +12,11 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@expo-google-fonts/inter": "^0.2.3",
     "@expo/metro-config": "^0.7.1",
     "@react-native-async-storage/async-storage": "^1.18.2",
     "@shopify/flash-list": "1.4.3",
+    "@supabase/auth-helpers-react": "^0.4.0",
     "@supabase/supabase-js": "^2.25.0",
     "@t3-oss/env-core": "^0.4.0",
     "@tanstack/react-query": "^4.29.5",
@@ -23,6 +25,7 @@
     "@trpc/server": "^10.27.1",
     "expo": "^48.0.19",
     "expo-constants": "~14.2.1",
+    "expo-font": "~11.1.1",
     "expo-linking": "~4.0.1",
     "expo-router": "^1.5.3",
     "expo-secure-store": "~12.1.1",

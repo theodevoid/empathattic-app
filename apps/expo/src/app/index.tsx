@@ -1,44 +1,36 @@
 import React from "react";
-import {
-  Alert,
-  Button,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Stack, useRouter } from "expo-router";
+import { Stack } from "expo-router";
+import { Button, Text, View } from "native-base";
 
-import { api } from "~/utils/api";
+import { useProtectedRoute } from "~/hooks/useProtectedRoute";
 import { supabase } from "~/lib/supabase";
 
 const Index = () => {
-  const { data } = api.post.all.useQuery();
+  useProtectedRoute();
 
-  console.log(data);
-
-  const googleSignIn = async () => {
-    const res = await supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
-
-    console.log(res);
+  const signOut = async () => {
+    try {
+      await supabase.auth.signOut();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
-    <SafeAreaView className="bg-[#1F104A]">
+    <SafeAreaView>
       {/* Changes page title visible on the header */}
       <Stack.Screen options={{ title: "Home Page" }} />
       <View>
         <Text>
-          Create <Text>T3</Text> Turbo
+          Create <Text>T3</Text> T3
         </Text>
-      </View>
+        <Text>
+          Create <Text>T3</Text> T3
+        </Text>
 
-      <TouchableOpacity onPress={() => void googleSignIn()}>
-        <Text>Press Here</Text>
-      </TouchableOpacity>
+        <Button onPress={() => void signOut()}>Sign Out</Button>
+      </View>
     </SafeAreaView>
   );
 };
