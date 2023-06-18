@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
 import { useEffect, useState } from "react";
 import { type Session } from "@supabase/supabase-js";
 

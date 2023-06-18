@@ -3,12 +3,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack, useRouter } from "expo-router";
 import { Button, Text, View } from "native-base";
 
+import { api } from "~/utils/api";
 import { supabase } from "~/lib/supabase";
 import { useStore } from "~/stores";
 
 const Index = () => {
   const { user, onLogout } = useStore();
   const router = useRouter();
+
+  const { data } = api.post.all.useQuery();
+
+  console.log(data);
 
   const signOut = async () => {
     try {

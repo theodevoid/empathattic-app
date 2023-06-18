@@ -11,7 +11,7 @@ import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-import { createPagesServerClient, type Session } from "@empathattic/auth";
+import { createClient, type User } from "@empathattic/auth";
 import { db } from "@empathattic/db";
 
 /**
@@ -24,7 +24,7 @@ import { db } from "@empathattic/db";
  *
  */
 type CreateContextOptions = {
-  session: Session | null;
+  user: User | null;
 };
 
 /**
@@ -38,7 +38,7 @@ type CreateContextOptions = {
  */
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
-    session: opts.session,
+    user: opts.user,
     db,
   };
 };
@@ -49,15 +49,20 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
  * @link https://trpc.io/docs/context
  */
 export const createTRPCContext = async (opts: CreateNextContextOptions) => {
-  const supabase = createPagesServerClient(opts, {
-    supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
-  });
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string,
+  );
 
-  const { session } = (await supabase.auth.getSession()).data;
+  const token = opts.req.headers.authorization;
+  const jwt = token?.split(" ")[1];
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser(jwt);
 
   return createInnerTRPCContext({
-    session,
+    user,
   });
 };
 
@@ -108,13 +113,13 @@ export const publicProcedure = t.procedure;
  * procedure
  */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
-  if (!ctx.session?.user) {
+  if (!ctx?.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
+
   return next({
     ctx: {
-      // infers the `session` as non-nullable
-      session: { ...ctx.session, user: ctx.session.user },
+      user: ctx.user,
     },
   });
 });

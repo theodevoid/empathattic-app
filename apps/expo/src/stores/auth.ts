@@ -3,7 +3,8 @@ import { StateCreator } from "zustand";
 
 export type AuthSlice = {
   user: User | null;
-  onLoginSuccess: (user: User) => void;
+  jwt: string | null;
+  onLoginSuccess: ({ user, jwt }: { user: User; jwt: string }) => void;
   onLogout: () => void;
 };
 
@@ -11,8 +12,9 @@ export const createAuthSlice: StateCreator<AuthSlice, [], [], AuthSlice> = (
   set,
 ) => ({
   user: null,
-  onLoginSuccess: (payload) => {
-    set(() => ({ user: payload }));
+  jwt: null,
+  onLoginSuccess: ({ jwt, user }) => {
+    set(() => ({ user, jwt }));
   },
   onLogout: () => {
     set(() => ({ user: null }));

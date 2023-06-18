@@ -17,7 +17,6 @@ import { useStore } from "~/stores";
 
 export const useHydration = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [initialRoute, setInitialRoute] = useState<string>("/login");
 
   const { onLoginSuccess } = useStore();
 
@@ -38,7 +37,10 @@ export const useHydration = () => {
       .getSession()
       .then(({ data: { session: supabaseSession } }) => {
         if (supabaseSession) {
-          onLoginSuccess(supabaseSession.user);
+          onLoginSuccess({
+            user: supabaseSession.user,
+            jwt: supabaseSession.access_token,
+          });
         }
       })
       .finally(() => {
@@ -47,11 +49,15 @@ export const useHydration = () => {
 
     supabase.auth.onAuthStateChange((_event, supabaseSession) => {
       if (supabaseSession) {
-        onLoginSuccess(supabaseSession.user);
+        onLoginSuccess({
+          user: supabaseSession.user,
+          jwt: supabaseSession.access_token,
+        });
       }
 
       setIsLoading(false);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {

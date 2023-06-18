@@ -9,7 +9,6 @@ import {
   HStack,
   Input,
   Text,
-  View,
   VStack,
 } from "native-base";
 

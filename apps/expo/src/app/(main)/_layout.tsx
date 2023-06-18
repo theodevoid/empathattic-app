@@ -3,6 +3,7 @@ import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { Icon, useToken } from "native-base";
 
 const MainLayout = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [primary]: string[] = useToken("colors", ["primary.600"]);
 
   return (
@@ -38,6 +39,7 @@ const MainLayout = () => {
           tabBarIcon: ({ focused }) => (
             <Icon
               size="xl"
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               as={FontAwesome5}
               name="hand-holding-heart"
               color={focused ? primary : "gray.500"}

@@ -7,6 +7,8 @@ import superjson from "superjson";
 
 import { type AppRouter } from "@empathattic/api";
 
+import { useStore } from "~/stores";
+
 /**
  * A set of typesafe hooks for consuming your API.
  */
@@ -47,6 +49,8 @@ const getBaseUrl = () => {
 export const TRPCProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const { jwt } = useStore();
+
   const [queryClient] = React.useState(() => new QueryClient());
   const [trpcClient] = React.useState(() =>
     api.createClient({
@@ -54,6 +58,9 @@ export const TRPCProvider: React.FC<{ children: React.ReactNode }> = ({
       links: [
         httpBatchLink({
           url: `${getBaseUrl()}/api/trpc`,
+          headers: {
+            Authorization: jwt ? `Bearer ${jwt}` : undefined,
+          },
         }),
       ],
     }),

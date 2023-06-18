@@ -22,7 +22,7 @@ const supabaseAnonKey = env.SUPABASE_ANON_KEY;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
     storage: ExpoSecureStoreAdapter as any,
     autoRefreshToken: true,
     persistSession: true,

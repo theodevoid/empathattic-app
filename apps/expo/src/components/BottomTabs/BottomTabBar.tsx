@@ -1,12 +1,11 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import { Box, Button, HStack, Text } from "native-base";
+import { Button, HStack } from "native-base";
 
 // WIP
 export const BottomTabBar: React.FC<BottomTabBarProps> = ({
   state,
   navigation,
-  descriptors,
 }) => {
   return (
     <SafeAreaView edges={["bottom"]}>

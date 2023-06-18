@@ -8,7 +8,7 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onSubmitLogin }) => {
-  const { formState, setValue, getValues } = useFormContext<LoginFormValues>();
+  const { formState, setValue } = useFormContext<LoginFormValues>();
 
   console.log(formState.errors);
 
