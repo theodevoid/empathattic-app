@@ -1,6 +1,6 @@
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Stack, useNavigation } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { Button, Text, View } from "native-base";
 
 import { supabase } from "~/lib/supabase";
@@ -8,13 +8,13 @@ import { useStore } from "~/stores";
 
 const Index = () => {
   const { user, onLogout } = useStore();
-  const navigation = useNavigation();
+  const router = useRouter();
 
   const signOut = async () => {
     try {
       await supabase.auth.signOut();
       onLogout();
-      navigation.dispatch({ type: "POP_TO_TOP" });
+      router.replace("/login");
     } catch (err) {
       console.log(err);
     }

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link as ExpoLink, Stack, useRouter } from "expo-router";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,10 +16,13 @@ import { FormProvider, useForm } from "react-hook-form";
 import { LoginForm } from "~/features/auth/components";
 import { loginFormSchema, LoginFormValues } from "~/features/auth/forms/login";
 import { supabase } from "~/lib/supabase";
+import { useStore } from "~/stores";
 
 const LoginScreen = () => {
   const toast = useToast();
   const router = useRouter();
+
+  const { user } = useStore();
 
   const formMethods = useForm<LoginFormValues>({
     defaultValues: {
@@ -31,13 +35,12 @@ const LoginScreen = () => {
 
   const onSubmitLogin = async (values: LoginFormValues) => {
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      await supabase.auth.signInWithPassword({
         email: values.email,
         password: values.password,
       });
-      console.log("🚀 ~ file: login.tsx:37 ~ onSubmitLogin ~ error:", error);
 
-      router.push("/");
+      router.replace("/");
     } catch (error) {
       toast.show({
         title: "Login Failed",
@@ -45,6 +48,13 @@ const LoginScreen = () => {
       });
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      router.replace("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   return (
     <SafeAreaView>

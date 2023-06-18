@@ -17,6 +17,7 @@ import { useStore } from "~/stores";
 
 export const useHydration = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [initialRoute, setInitialRoute] = useState<string>("/login");
 
   const { onLoginSuccess } = useStore();
 
