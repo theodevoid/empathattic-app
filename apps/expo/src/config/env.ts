@@ -13,8 +13,8 @@ export const env = createEnv({
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
    */
   runtimeEnv: {
-    SUPABASE_URL: SUPABASE_URL,
-    SUPABASE_ANON_KEY: SUPABASE_ANON_KEY,
+    SUPABASE_URL: SUPABASE_URL || process.env.SUPABASE_URL,
+    SUPABASE_ANON_KEY: SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY,
   },
   skipValidation: !!process.env.CI || !!process.env.SKIP_ENV_VALIDATION,
 });

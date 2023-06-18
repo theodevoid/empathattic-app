@@ -9,14 +9,14 @@ export const useSession = () => {
   const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
-    // supabase.auth
-    //   .getSession()
-    //   .then(({ data: { session: supabaseSession } }) => {
-    //     setSession(supabaseSession);
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //   });
+    supabase.auth
+      .getSession()
+      .then(({ data: { session: supabaseSession } }) => {
+        setSession(supabaseSession);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
 
     supabase.auth.onAuthStateChange((_event, supabaseSession) => {
       setSession(supabaseSession);

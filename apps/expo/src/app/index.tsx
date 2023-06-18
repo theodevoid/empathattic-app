@@ -1,17 +1,20 @@
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Stack } from "expo-router";
+import { Stack, useNavigation } from "expo-router";
 import { Button, Text, View } from "native-base";
 
-import { useProtectedRoute } from "~/hooks/useProtectedRoute";
 import { supabase } from "~/lib/supabase";
+import { useStore } from "~/stores";
 
 const Index = () => {
-  useProtectedRoute();
+  const { user, onLogout } = useStore();
+  const navigation = useNavigation();
 
   const signOut = async () => {
     try {
       await supabase.auth.signOut();
+      onLogout();
+      navigation.dispatch({ type: "POP_TO_TOP" });
     } catch (err) {
       console.log(err);
     }
@@ -28,6 +31,7 @@ const Index = () => {
         <Text>
           Create <Text>T3</Text> T3
         </Text>
+        <Text>{user?.email}</Text>
 
         <Button onPress={() => void signOut()}>Sign Out</Button>
       </View>

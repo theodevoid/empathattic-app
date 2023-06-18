@@ -14,6 +14,7 @@
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.3",
     "@expo/metro-config": "^0.7.1",
+    "@hookform/resolvers": "^3.1.1",
     "@react-native-async-storage/async-storage": "^1.18.2",
     "@shopify/flash-list": "1.4.3",
     "@supabase/auth-helpers-react": "^0.4.0",
@@ -43,7 +44,8 @@
     "react-native-svg": "13.4.0",
     "react-native-url-polyfill": "^1.3.0",
     "superjson": "1.9.1",
-    "zod": "^3.21.4"
+    "zod": "^3.21.4",
+    "zustand": "^4.3.8"
   },
   "devDependencies": {
     "@babel/core": "^7.21.8",

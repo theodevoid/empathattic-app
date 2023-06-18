@@ -1,5 +1,6 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link as ExpoLink, Stack, useRouter } from "expo-router";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
   Center,
@@ -12,23 +13,29 @@ import {
 import { FormProvider, useForm } from "react-hook-form";
 
 import { LoginForm } from "~/features/auth/components";
-import { LoginFormValues } from "~/features/auth/forms/login";
+import { loginFormSchema, LoginFormValues } from "~/features/auth/forms/login";
 import { supabase } from "~/lib/supabase";
 
 const LoginScreen = () => {
   const toast = useToast();
   const router = useRouter();
 
-  const formMethods = useForm<LoginFormValues>();
+  const formMethods = useForm<LoginFormValues>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: zodResolver(loginFormSchema),
+    mode: "onChange",
+  });
 
-  const onSubmitLogin = async () => {
-    const { getValues } = formMethods;
-
+  const onSubmitLogin = async (values: LoginFormValues) => {
     try {
-      await supabase.auth.signInWithPassword({
-        email: getValues("email"),
-        password: getValues("password"),
+      const { error } = await supabase.auth.signInWithPassword({
+        email: values.email,
+        password: values.password,
       });
+      console.log("🚀 ~ file: login.tsx:37 ~ onSubmitLogin ~ error:", error);
 
       router.push("/");
     } catch (error) {
@@ -68,7 +75,9 @@ const LoginScreen = () => {
 
           <VStack space={3} mt="5">
             <FormProvider {...formMethods}>
-              <LoginForm onSubmitLogin={() => void onSubmitLogin()} />
+              <LoginForm
+                onSubmitLogin={formMethods.handleSubmit(onSubmitLogin)}
+              />
             </FormProvider>
             <HStack mt="6" justifyContent="center">
               <Text
