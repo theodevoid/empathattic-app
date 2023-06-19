@@ -1367,6 +1367,11 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.42.0.tgz#484a1d638de2911e6f5a30c12f49c7e4a3270fb6"
   integrity sha512-6SWlXpWU5AvId8Ac7zjzmIOqMOba/JWY8XZ4A7q7Gn1Vlfg/SFFIlrtHXt9nPn4op9ZPAkl91Jao+QQv3r/ukw==
 
+"@expo-google-fonts/barlow@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/barlow/-/barlow-0.2.3.tgz#65a1fb99eeda4ae1761350f7a5c6b5cc94a73325"
+  integrity sha512-Ojp7odVuAJZvHm3Cf1snlNJt2xUenm4emgtcx1iV+eMah6vkG+1UOfNirceg/Ro94lAgz1CJEDhDJPrV4VvNHQ==
+
 "@expo-google-fonts/inter@^0.2.3":
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@expo-google-fonts/inter/-/inter-0.2.3.tgz#82bf7224bb76fc6614a00393a9e9ee4d6dd09dcb"

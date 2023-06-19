@@ -6,6 +6,9 @@ const MainLayout = () => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [primary]: string[] = useToken("colors", ["primary.600"]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const [headingFontFamily]: string[] = useToken("fonts", ["heading"]);
+
   return (
     <Tabs
       screenOptions={{
@@ -14,6 +17,7 @@ const MainLayout = () => {
         },
         headerTitleStyle: {
           color: "white",
+          fontFamily: `${headingFontFamily}_600SemiBold`,
         },
       }}
     >

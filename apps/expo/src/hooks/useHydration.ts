@@ -1,5 +1,16 @@
 import { useEffect, useState } from "react";
 import {
+  Barlow_100Thin,
+  Barlow_200ExtraLight,
+  Barlow_300Light,
+  Barlow_400Regular,
+  Barlow_500Medium,
+  Barlow_600SemiBold,
+  Barlow_700Bold,
+  Barlow_800ExtraBold,
+  Barlow_900Black,
+} from "@expo-google-fonts/barlow";
+import {
   Inter_100Thin,
   Inter_200ExtraLight,
   Inter_300Light,
@@ -18,7 +29,7 @@ import { useStore } from "~/stores";
 export const useHydration = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const { onLoginSuccess } = useStore();
+  const { onLoginSuccess, onLogout } = useStore();
 
   const [fontsLoaded] = useFonts({
     Inter_100Thin,
@@ -30,6 +41,15 @@ export const useHydration = () => {
     Inter_700Bold,
     Inter_800ExtraBold,
     Inter_900Black,
+    Barlow_100Thin,
+    Barlow_200ExtraLight,
+    Barlow_300Light,
+    Barlow_400Regular,
+    Barlow_500Medium,
+    Barlow_600SemiBold,
+    Barlow_700Bold,
+    Barlow_800ExtraBold,
+    Barlow_900Black,
   });
 
   useEffect(() => {
@@ -41,6 +61,8 @@ export const useHydration = () => {
             user: supabaseSession.user,
             jwt: supabaseSession.access_token,
           });
+        } else {
+          onLogout();
         }
       })
       .finally(() => {
@@ -53,6 +75,8 @@ export const useHydration = () => {
           user: supabaseSession.user,
           jwt: supabaseSession.access_token,
         });
+      } else {
+        onLogout();
       }
 
       setIsLoading(false);
