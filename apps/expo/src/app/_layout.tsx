@@ -26,7 +26,7 @@ const RootLayout = () => {
           It also allows you to configure your screens 
         */}
           <StatusBar />
-          <Slot initialRouteName="/login" />
+          {!isLoading && <Slot initialRouteName="/login" />}
         </NativeBaseProvider>
       </SafeAreaProvider>
     </TRPCProvider>

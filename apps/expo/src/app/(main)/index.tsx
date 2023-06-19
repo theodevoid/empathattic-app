@@ -1,27 +1,33 @@
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack } from "expo-router";
-import { Heading, Text, View } from "native-base";
+import { Box, FlatList, StatusBar } from "native-base";
 
-import { useStore } from "~/stores";
+import {
+  CampaignCard,
+  Header,
+  TotalDonationWidget,
+} from "~/features/home/components";
 
 const Index = () => {
-  const { user } = useStore();
-
   return (
     <SafeAreaView>
-      {/* Changes page title visible on the header */}
-      <Stack.Screen options={{ title: "Home Page" }} />
-      <View>
-        <Heading>Create T3 App</Heading>
-        <Text>
-          Create <Text>T3</Text> T3
-        </Text>
-        <Text>
-          Create <Text>T3</Text> T3
-        </Text>
-        <Text>{user?.email}</Text>
-      </View>
+      <Stack.Screen options={{ title: "Home Page", headerShown: false }} />
+      <StatusBar />
+      <Header />
+      <FlatList
+        data={[1, 1, 1, 1, 1]}
+        ListHeaderComponent={
+          <Box mb="5">
+            <TotalDonationWidget />
+          </Box>
+        }
+        renderItem={() => (
+          <Box px="4">
+            <CampaignCard />
+          </Box>
+        )}
+      />
     </SafeAreaView>
   );
 };

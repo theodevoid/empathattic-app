@@ -85,6 +85,6 @@ export const useHydration = () => {
   }, []);
 
   return {
-    isLoading: isLoading && !fontsLoaded,
+    isLoading: !fontsLoaded || isLoading,
   };
 };
