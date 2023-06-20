@@ -9,14 +9,14 @@ export const Header = () => {
   const { top } = useSafeAreaInsets();
 
   return (
-    <View bg="primary.100" pt={top + 5} px="4" pb="2">
+    <View bg="primary.50" pt={top + 5} px="4" pb="2">
       <HStack mb="4">
         <Avatar />
         <Stack ml="4" justifyContent="center">
           <Heading fontWeight="semibold" size="md">
             👋 Hi, {user?.email}
           </Heading>
-          <Text>What kindness will you spread today?</Text>
+          <Text>Let&apos;s spread more kindness today</Text>
         </Stack>
       </HStack>
     </View>

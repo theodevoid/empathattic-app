@@ -19,6 +19,7 @@ const MainLayout = () => {
           color: "white",
           fontFamily: `${headingFontFamily}_600SemiBold`,
         },
+        headerTitleAlign: "center",
       }}
       sceneContainerStyle={{
         backgroundColor: "white",

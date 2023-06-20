@@ -1,4 +1,5 @@
 import React from "react";
+import { Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack } from "expo-router";
 import {
@@ -23,7 +24,11 @@ const Index = () => {
       <Stack.Screen options={{ title: "Home Page", headerShown: false }} />
       <StatusBar />
       <Header />
-      <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
+      <ScrollView
+        contentContainerStyle={{
+          paddingBottom: Platform.OS === "ios" ? 100 : 150,
+        }}
+      >
         <Box mb="5">
           <TotalDonationWidget />
         </Box>

@@ -8,7 +8,7 @@ export const TotalDonationWidget = () => {
       <View
         w="100%"
         h={45}
-        bg="primary.100"
+        bg="primary.50"
         position="absolute"
         top={0}
         zIndex={-100}
