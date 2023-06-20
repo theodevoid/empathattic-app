@@ -20,6 +20,9 @@ const MainLayout = () => {
           fontFamily: `${headingFontFamily}_600SemiBold`,
         },
       }}
+      sceneContainerStyle={{
+        backgroundColor: "white",
+      }}
     >
       <Tabs.Screen
         name="index"

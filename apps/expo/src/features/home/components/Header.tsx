@@ -1,3 +1,4 @@
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Avatar, Heading, HStack, Stack, Text, View } from "native-base";
 
 import { useStore } from "~/stores";
@@ -5,8 +6,10 @@ import { useStore } from "~/stores";
 export const Header = () => {
   const { user } = useStore();
 
+  const { top } = useSafeAreaInsets();
+
   return (
-    <View bg="primary.100" pt={5} px="4" pb="2">
+    <View bg="primary.100" pt={top + 5} px="4" pb="2">
       <HStack mb="4">
         <Avatar />
         <Stack ml="4" justifyContent="center">

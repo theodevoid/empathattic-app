@@ -12,10 +12,21 @@ import {
 
 import { toRupiah } from "~/utils/format";
 
-export const CampaignCard = () => {
+interface CampaignCardProps {
+  fullWidth?: boolean;
+}
+
+export const CampaignCard: React.FC<CampaignCardProps> = ({
+  fullWidth = false,
+}) => {
   return (
-    <Box shadow="1" bg="white" borderRadius="xl">
-      <AspectRatio ratio={16 / 9} width="100%">
+    <Box
+      shadow="1"
+      bg="white"
+      borderRadius="xl"
+      width={fullWidth ? "100%" : 240}
+    >
+      <AspectRatio ratio={fullWidth ? 16 / 9 : 5 / 4} width="100%">
         <Image
           source={{
             uri: "https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
