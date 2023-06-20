@@ -13,7 +13,7 @@ export const TotalDonationWidget = () => {
         top={0}
         zIndex={-100}
       />
-      <Box h={90} bg="cyan.700" rounded="2xl" mx="8">
+      <Box h={90} bg="primary.700" rounded="2xl" mx="8">
         <Stack
           position="relative"
           alignItems="center"

@@ -1,7 +1,15 @@
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack } from "expo-router";
-import { Box, FlatList, Heading, ScrollView, StatusBar } from "native-base";
+import {
+  Box,
+  Button,
+  FlatList,
+  Heading,
+  HStack,
+  ScrollView,
+  StatusBar,
+} from "native-base";
 
 import {
   CampaignCard,
@@ -37,9 +45,11 @@ const Index = () => {
         </Box>
 
         <Box px="4">
-          <Heading size="md" mb="2">
-            Newest Campaigns
-          </Heading>
+          <HStack justifyContent="space-between" alignItems="center" mb="2">
+            <Heading size="md">Newest Campaigns</Heading>
+
+            <Button variant="ghost">View All</Button>
+          </HStack>
           <CampaignCard fullWidth />
         </Box>
       </ScrollView>
