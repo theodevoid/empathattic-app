@@ -10,15 +10,20 @@ import {
   Text,
 } from "native-base";
 
-import { toRupiah } from "~/utils/format";
+import { Campaign } from "@empathattic/db/schemas";
+
+import { toPercentage, toRupiah } from "~/utils/format";
 
 interface CampaignCardProps {
   fullWidth?: boolean;
+  campaign: Campaign;
 }
 
 export const CampaignCard: React.FC<CampaignCardProps> = ({
   fullWidth = false,
+  campaign,
 }) => {
+  const { title, currentFunding, targetFunding, id, images } = campaign;
   return (
     <Box
       shadow="1"
@@ -29,7 +34,7 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
       <AspectRatio ratio={fullWidth ? 16 / 9 : 5 / 4} width="100%">
         <Image
           source={{
-            uri: "https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+            uri: images[0],
           }}
           alt="campaign"
           borderTopRightRadius="xl"
@@ -38,16 +43,18 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
       </AspectRatio>
       <Box p="2" pb="4">
         <Stack space="2" mt="2">
-          <Heading size="sm">Beasiswa Penerus Bangsa</Heading>
+          <Heading size="sm">{title}</Heading>
           <Stack space="1">
-            <Progress value={75} />
+            <Progress value={(currentFunding || 0) / (targetFunding || 0)} />
             <HStack justifyContent="space-between">
               <Text fontWeight="bold" color="green.700">
-                {toRupiah(1000000)}
+                {toRupiah(currentFunding as number)}
               </Text>
-              <Text fontWeight="bold" color="blueGray.500">
-                75%
-              </Text>
+              {!!targetFunding && (
+                <Text fontWeight="bold" color="blueGray.500">
+                  {toPercentage(currentFunding || 0, targetFunding || 0)}
+                </Text>
+              )}
             </HStack>
           </Stack>
         </Stack>

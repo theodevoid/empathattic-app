@@ -6,6 +6,7 @@ import {
   pgTable,
   text,
   timestamp,
+  uuid,
 } from "drizzle-orm/pg-core";
 
 import { category } from "./category";
@@ -18,7 +19,7 @@ export const campaignStatus = pgEnum("campaign_status", [
 ]);
 
 export const campaign = pgTable("campaigns", {
-  id: text("id").primaryKey(),
+  id: uuid("id").defaultRandom().primaryKey(),
   title: text("title").notNull(),
   targetFunding: integer("target_funding").default(0),
   currentFunding: integer("current_funding").default(0),
@@ -30,7 +31,7 @@ export const campaign = pgTable("campaigns", {
   slug: text("slug").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-  categoryId: text("category_id").references(() => category.id),
+  categoryId: uuid("category_id").references(() => category.id),
 });
 
 export type Campaign = InferModel<typeof campaign>;

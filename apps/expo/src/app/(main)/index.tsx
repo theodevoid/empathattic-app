@@ -18,11 +18,10 @@ import {
   Header,
   TotalDonationWidget,
 } from "~/features/home/components";
+import { LatestCampaignsSection } from "~/features/home/components/LatestCampaignsSection";
 
 const Index = () => {
-  const { data } = api.campaign.getCampaigns.useQuery({});
-
-  console.log(data);
+  const { data: campaigns } = api.campaign.getCampaigns.useQuery({});
 
   return (
     <SafeAreaView edges={["bottom"]}>
@@ -42,26 +41,21 @@ const Index = () => {
           <Heading mx="4" size="md" mb="2">
             Explore Campaigns
           </Heading>
-          <FlatList
-            data={data || []}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ index }) => (
-              <Box ml={index === 0 ? "4" : "2"} my="1">
-                <CampaignCard />
-              </Box>
-            )}
-          />
+          {!!campaigns && (
+            <FlatList
+              data={campaigns}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ index, item }) => (
+                <Box ml={index === 0 ? "4" : "2"} my="1">
+                  <CampaignCard campaign={item} />
+                </Box>
+              )}
+            />
+          )}
         </Box>
 
-        <Box px="4">
-          <HStack justifyContent="space-between" alignItems="center" mb="2">
-            <Heading size="md">Newest Campaigns</Heading>
-
-            <Button variant="ghost">View All</Button>
-          </HStack>
-          <CampaignCard fullWidth />
-        </Box>
+        <LatestCampaignsSection />
       </ScrollView>
     </SafeAreaView>
   );
