@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { SplashScreen as ExpoRouterSplashScreen, Slot } from "expo-router";
+import {
+  SplashScreen as ExpoRouterSplashScreen,
+  Slot,
+  useRouter,
+} from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { NativeBaseProvider } from "native-base";
 
@@ -11,7 +15,15 @@ import { theme } from "~/theme";
 // This is the main layout of the app
 // It wraps your pages with the providers they need
 const RootLayout = () => {
-  const { isLoading } = useHydration();
+  const { isLoading, authenticated } = useHydration();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading && !authenticated) {
+      router.replace("login");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading, authenticated]);
 
   if (isLoading) {
     return <ExpoRouterSplashScreen />;
@@ -26,7 +38,9 @@ const RootLayout = () => {
           It also allows you to configure your screens 
         */}
           <StatusBar />
-          {!isLoading && <Slot initialRouteName="/login" />}
+          {!isLoading && (
+            <Slot initialRouteName={authenticated ? "index" : "login"} />
+          )}
         </NativeBaseProvider>
       </SafeAreaProvider>
     </TRPCProvider>

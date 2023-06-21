@@ -29,7 +29,7 @@ import { useStore } from "~/stores";
 export const useHydration = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const { onLoginSuccess, onLogout } = useStore();
+  const { onLoginSuccess, onLogout, user } = useStore();
 
   const [fontsLoaded] = useFonts({
     Inter_100Thin,
@@ -56,7 +56,15 @@ export const useHydration = () => {
     supabase.auth
       .getSession()
       .then(({ data: { session: supabaseSession } }) => {
+        console.log(
+          "🚀 ~ file: useHydration.ts:60 ~ .then ~ supabaseSession:",
+          supabaseSession,
+        );
         if (supabaseSession) {
+          if (__DEV__) {
+            console.log(supabaseSession);
+          }
+
           onLoginSuccess({
             user: supabaseSession.user,
             jwt: supabaseSession.access_token,
@@ -64,6 +72,9 @@ export const useHydration = () => {
         } else {
           onLogout();
         }
+      })
+      .catch((err) => {
+        console.log(err);
       })
       .finally(() => {
         setIsLoading(false);
@@ -86,5 +97,6 @@ export const useHydration = () => {
 
   return {
     isLoading: !fontsLoaded || isLoading,
+    authenticated: !!user,
   };
 };

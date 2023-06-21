@@ -12,6 +12,7 @@ import {
   StatusBar,
 } from "native-base";
 
+import { api } from "~/utils/api";
 import {
   CampaignCard,
   Header,
@@ -19,6 +20,10 @@ import {
 } from "~/features/home/components";
 
 const Index = () => {
+  const { data } = api.campaign.getCampaigns.useQuery({});
+
+  console.log(data);
+
   return (
     <SafeAreaView edges={["bottom"]}>
       <Stack.Screen options={{ title: "Home Page", headerShown: false }} />
@@ -38,7 +43,7 @@ const Index = () => {
             Explore Campaigns
           </Heading>
           <FlatList
-            data={[1, 1, 1, 1, 1]}
+            data={data || []}
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={({ index }) => (

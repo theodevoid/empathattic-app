@@ -1,8 +1,8 @@
-import { postRouter } from "./router/post";
+import { campaignRouter } from "./router/campaign";
 import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
-  post: postRouter,
+  campaign: campaignRouter,
 });
 
 // export type definition of API
