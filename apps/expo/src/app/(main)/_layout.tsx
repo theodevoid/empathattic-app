@@ -28,7 +28,7 @@ const MainLayout = () => {
       <Tabs.Screen
         name="index"
         options={{
-          href: "/",
+          href: "/home",
           tabBarIcon: ({ focused }) => (
             <Icon
               size="xl"

@@ -1,16 +1,8 @@
 import React from "react";
 import { Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Stack } from "expo-router";
-import {
-  Box,
-  Button,
-  FlatList,
-  Heading,
-  HStack,
-  ScrollView,
-  StatusBar,
-} from "native-base";
+import { Stack, useRouter } from "expo-router";
+import { Box, FlatList, Heading, ScrollView, StatusBar } from "native-base";
 
 import { api } from "~/utils/api";
 import {
@@ -20,8 +12,10 @@ import {
 } from "~/features/home/components";
 import { LatestCampaignsSection } from "~/features/home/components/LatestCampaignsSection";
 
-const Index = () => {
+const HomeScreen = () => {
   const { data: campaigns } = api.campaign.getCampaigns.useQuery({});
+
+  const router = useRouter();
 
   return (
     <SafeAreaView edges={["bottom"]}>
@@ -48,7 +42,17 @@ const Index = () => {
               showsHorizontalScrollIndicator={false}
               renderItem={({ index, item }) => (
                 <Box ml={index === 0 ? "4" : "2"} my="1">
-                  <CampaignCard campaign={item} />
+                  <CampaignCard
+                    onDonatePress={() =>
+                      router.push({
+                        pathname: "/campaign/detail",
+                        params: {
+                          campaignId: item.id,
+                        },
+                      })
+                    }
+                    campaign={item}
+                  />
                 </Box>
               )}
             />
@@ -61,4 +65,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default HomeScreen;

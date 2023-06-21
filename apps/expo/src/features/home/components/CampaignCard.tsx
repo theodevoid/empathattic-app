@@ -17,13 +17,16 @@ import { toPercentage, toRupiah } from "~/utils/format";
 interface CampaignCardProps {
   fullWidth?: boolean;
   campaign: Campaign;
+  onDonatePress: () => void;
 }
 
 export const CampaignCard: React.FC<CampaignCardProps> = ({
   fullWidth = false,
   campaign,
+  onDonatePress,
 }) => {
   const { title, currentFunding, targetFunding, id, images } = campaign;
+
   return (
     <Box
       shadow="1"
@@ -58,7 +61,7 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
             </HStack>
           </Stack>
         </Stack>
-        <Button rounded="xl" mt="6">
+        <Button onPress={onDonatePress} rounded="xl" mt="6">
           Donate
         </Button>
       </Box>

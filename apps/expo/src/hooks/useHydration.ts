@@ -56,15 +56,7 @@ export const useHydration = () => {
     supabase.auth
       .getSession()
       .then(({ data: { session: supabaseSession } }) => {
-        console.log(
-          "🚀 ~ file: useHydration.ts:60 ~ .then ~ supabaseSession:",
-          supabaseSession,
-        );
         if (supabaseSession) {
-          if (__DEV__) {
-            console.log(supabaseSession);
-          }
-
           onLoginSuccess({
             user: supabaseSession.user,
             jwt: supabaseSession.access_token,

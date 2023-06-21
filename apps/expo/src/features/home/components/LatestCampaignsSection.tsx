@@ -1,7 +1,5 @@
 import { Box, Button, Heading, HStack, Text } from "native-base";
 
-import { Campaign } from "@empathattic/db/schemas";
-
 import { api } from "~/utils/api";
 import { CampaignCard } from "./CampaignCard";
 

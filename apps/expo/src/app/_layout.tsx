@@ -3,6 +3,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import {
   SplashScreen as ExpoRouterSplashScreen,
   Slot,
+  Stack,
   useRouter,
 } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -38,9 +39,7 @@ const RootLayout = () => {
           It also allows you to configure your screens 
         */}
           <StatusBar />
-          {!isLoading && (
-            <Slot initialRouteName={authenticated ? "index" : "login"} />
-          )}
+          {!isLoading && <Stack screenOptions={{ headerShown: false }} />}
         </NativeBaseProvider>
       </SafeAreaProvider>
     </TRPCProvider>

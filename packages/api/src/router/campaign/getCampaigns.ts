@@ -23,7 +23,7 @@ export const getCampaigns = publicProcedure
       const campaignById = await db
         .select()
         .from(campaign)
-        .where(eq(campaign.id, "id"));
+        .where(eq(campaign.id, id));
 
       return campaignById;
     }
