@@ -23,6 +23,7 @@ export const campaign = pgTable("campaigns", {
   title: text("title").notNull(),
   targetFunding: integer("target_funding").default(0),
   currentFunding: integer("current_funding").default(0),
+  totalFunding: integer("total_funding").default(0),
   images: text("images").array().notNull(),
   status: campaignStatus("status").default("ACTIVE"),
   description: text("description"),
