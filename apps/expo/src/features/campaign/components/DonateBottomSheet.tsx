@@ -37,6 +37,20 @@ export const DonateBottomSheet: React.FC<DonateBottomSheetProps> = ({
   campaignId,
   onDonateSuccess = () => undefined,
 }) => {
+  const {
+    formState: { errors },
+    control,
+    handleSubmit,
+    setValue,
+    reset,
+  } = useForm<DonationFormValues>({
+    defaultValues: {
+      amount: 0,
+    },
+    resolver: zodResolver(donationFormSchema),
+    mode: "onChange",
+  });
+
   const snapPoints = useMemo(() => [120, 300], []);
 
   const renderBackdrop = useCallback(
@@ -57,19 +71,9 @@ export const DonateBottomSheet: React.FC<DonateBottomSheetProps> = ({
     }
   };
 
-  const {
-    formState: { errors },
-    control,
-    handleSubmit,
-    setValue,
-    reset,
-  } = useForm<DonationFormValues>({
-    defaultValues: {
-      amount: 0,
-    },
-    resolver: zodResolver(donationFormSchema),
-    mode: "onChange",
-  });
+  const setDonationAmount = (amount: number) => {
+    setValue("amount", amount);
+  };
 
   return (
     <BottomSheet
@@ -107,8 +111,9 @@ export const DonateBottomSheet: React.FC<DonateBottomSheetProps> = ({
               }}
               variant="subtle"
               colorScheme="blueGray"
+              onPress={() => setDonationAmount(10_000)}
             >
-              {toRupiah(10000)}
+              {toRupiah(10_000)}
             </Button>
             <Button
               _text={{
@@ -116,6 +121,7 @@ export const DonateBottomSheet: React.FC<DonateBottomSheetProps> = ({
               }}
               variant="subtle"
               colorScheme="blueGray"
+              onPress={() => setDonationAmount(50_000)}
             >
               {toRupiah(50_000)}
             </Button>
@@ -125,6 +131,7 @@ export const DonateBottomSheet: React.FC<DonateBottomSheetProps> = ({
               }}
               variant="subtle"
               colorScheme="blueGray"
+              onPress={() => setDonationAmount(100_000)}
             >
               {toRupiah(100_000)}
             </Button>
