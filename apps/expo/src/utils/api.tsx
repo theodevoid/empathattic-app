@@ -19,7 +19,7 @@ export { type RouterInputs, type RouterOutputs } from "@empathattic/api";
  * Extend this function when going to production by
  * setting the baseUrl to your production API URL.
  */
-const getBaseUrl = () => {
+export const getBaseUrl = () => {
   /**
    * Gets the IP address of your host-machine. If it cannot automatically find it,
    * you'll have to manually set it. NOTE: Port 3000 should work for most but confirm
@@ -34,7 +34,7 @@ const getBaseUrl = () => {
 
   const localhost = debuggerHost?.split(":")[0];
   if (!localhost) {
-    // return "https://your-production-url.com";
+    return "https://empathattic.com";
     throw new Error(
       "Failed to get localhost. Please point to your production server.",
     );
@@ -52,18 +52,34 @@ export const TRPCProvider: React.FC<{ children: React.ReactNode }> = ({
   const { jwt } = useStore();
 
   const [queryClient] = React.useState(() => new QueryClient());
-  const [trpcClient] = React.useState(() =>
-    api.createClient({
-      transformer: superjson,
-      links: [
-        httpBatchLink({
-          url: `${getBaseUrl()}/api/trpc`,
-          headers: {
-            Authorization: jwt ? `Bearer ${jwt}` : undefined,
-          },
-        }),
-      ],
-    }),
+  // const [trpcClient] = React.useState(() =>
+  //   api.createClient({
+  //     transformer: superjson,
+  //     links: [
+  //       httpBatchLink({
+  //         url: `${getBaseUrl()}/api/trpc`,
+  //         headers: {
+  //           Authorization: jwt ? `Bearer ${jwt}` : undefined,
+  //         },
+  //       }),
+  //     ],
+  //   }),
+  // );
+
+  const trpcClient = React.useMemo(
+    () =>
+      api.createClient({
+        transformer: superjson,
+        links: [
+          httpBatchLink({
+            url: `${getBaseUrl()}/api/trpc`,
+            headers: {
+              Authorization: jwt ? `Bearer ${jwt}` : undefined,
+            },
+          }),
+        ],
+      }),
+    [jwt],
   );
 
   return (

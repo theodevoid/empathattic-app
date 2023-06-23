@@ -1,8 +1,10 @@
-import { postRouter } from "./router/post";
+import { campaignRouter } from "./router/campaign";
+import { donationRouter } from "./router/donation";
 import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
-  post: postRouter,
+  campaign: campaignRouter,
+  donation: donationRouter,
 });
 
 // export type definition of API

@@ -10,8 +10,6 @@ interface LoginFormProps {
 export const LoginForm: React.FC<LoginFormProps> = ({ onSubmitLogin }) => {
   const { formState, setValue } = useFormContext<LoginFormValues>();
 
-  console.log(formState.errors);
-
   return (
     <>
       <FormControl isInvalid={!!formState.errors.email}>

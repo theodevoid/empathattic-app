@@ -1,5 +1,8 @@
-import { user } from "@empathattic/db/schemas";
+import { createTRPCRouter } from "../../trpc";
+import { getCampaignById } from "./getCampaignById";
+import { getCampaigns } from "./getCampaigns";
 
-import { createTRPCRouter, protectedProcedure } from "../trpc";
-
-export const campaignRouter = createTRPCRouter({});
+export const campaignRouter = createTRPCRouter({
+  getCampaigns,
+  getCampaignById,
+});

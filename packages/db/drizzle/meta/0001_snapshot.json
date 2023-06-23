@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "359b0e8f-abcf-4ead-95bd-53630957cc52",
-  "prevId": "3609d17f-1c54-4a01-834f-2de542e5968d",
+  "id": "26c94f9b-48da-4cd1-81ae-68b4263eb65f",
+  "prevId": "f176e54e-edff-4258-abc4-079c4f473e67",
   "tables": {
     "users": {
       "name": "users",
@@ -43,9 +43,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "name": {
           "name": "name",
@@ -64,9 +65,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "title": {
           "name": "title",
@@ -83,6 +85,13 @@
         },
         "current_funding": {
           "name": "current_funding",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "total_funding": {
+          "name": "total_funding",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
@@ -141,7 +150,7 @@
         },
         "category_id": {
           "name": "category_id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": false
         }

@@ -1,24 +1,22 @@
 import React from "react";
 import { Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Stack } from "expo-router";
-import {
-  Box,
-  Button,
-  FlatList,
-  Heading,
-  HStack,
-  ScrollView,
-  StatusBar,
-} from "native-base";
+import { Stack, useRouter } from "expo-router";
+import { Box, FlatList, Heading, ScrollView, StatusBar } from "native-base";
 
+import { api } from "~/utils/api";
 import {
   CampaignCard,
   Header,
   TotalDonationWidget,
 } from "~/features/home/components";
+import { LatestCampaignsSection } from "~/features/home/components/LatestCampaignsSection";
 
-const Index = () => {
+const HomeScreen = () => {
+  const { data: campaigns } = api.campaign.getCampaigns.useQuery({});
+
+  const router = useRouter();
+
   return (
     <SafeAreaView edges={["bottom"]}>
       <Stack.Screen options={{ title: "Home Page", headerShown: false }} />
@@ -37,29 +35,34 @@ const Index = () => {
           <Heading mx="4" size="md" mb="2">
             Explore Campaigns
           </Heading>
-          <FlatList
-            data={[1, 1, 1, 1, 1]}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ index }) => (
-              <Box ml={index === 0 ? "4" : "2"} my="1">
-                <CampaignCard />
-              </Box>
-            )}
-          />
+          {!!campaigns && (
+            <FlatList
+              data={campaigns}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ index, item }) => (
+                <Box ml={index === 0 ? "4" : "2"} my="1">
+                  <CampaignCard
+                    onDonatePress={() =>
+                      router.push({
+                        pathname: "/campaign/detail",
+                        params: {
+                          campaignId: item.id,
+                        },
+                      })
+                    }
+                    campaign={item}
+                  />
+                </Box>
+              )}
+            />
+          )}
         </Box>
 
-        <Box px="4">
-          <HStack justifyContent="space-between" alignItems="center" mb="2">
-            <Heading size="md">Newest Campaigns</Heading>
-
-            <Button variant="ghost">View All</Button>
-          </HStack>
-          <CampaignCard fullWidth />
-        </Box>
+        <LatestCampaignsSection />
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-export default Index;
+export default HomeScreen;

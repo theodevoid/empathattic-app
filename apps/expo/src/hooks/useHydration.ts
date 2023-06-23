@@ -29,7 +29,7 @@ import { useStore } from "~/stores";
 export const useHydration = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const { onLoginSuccess, onLogout } = useStore();
+  const { onLoginSuccess, onLogout, user } = useStore();
 
   const [fontsLoaded] = useFonts({
     Inter_100Thin,
@@ -65,6 +65,9 @@ export const useHydration = () => {
           onLogout();
         }
       })
+      .catch((err) => {
+        console.log(err);
+      })
       .finally(() => {
         setIsLoading(false);
       });
@@ -86,5 +89,6 @@ export const useHydration = () => {
 
   return {
     isLoading: !fontsLoaded || isLoading,
+    authenticated: !!user,
   };
 };

@@ -1,9 +1,9 @@
 import type { ExpoConfig } from "@expo/config";
 
 const defineConfig = (): ExpoConfig => ({
-  name: "expo",
-  slug: "expo",
-  scheme: "expo",
+  name: "Empathattic",
+  slug: "empathattic",
+  scheme: "empathattic",
   version: "1.0.0",
   orientation: "portrait",
   icon: "./assets/icon.png",
@@ -11,7 +11,7 @@ const defineConfig = (): ExpoConfig => ({
   splash: {
     image: "./assets/icon.png",
     resizeMode: "contain",
-    backgroundColor: "#1F104A",
+    backgroundColor: "#0431e2",
   },
   updates: {
     fallbackToCacheTimeout: 0,
@@ -19,12 +19,12 @@ const defineConfig = (): ExpoConfig => ({
   assetBundlePatterns: ["**/*"],
   ios: {
     supportsTablet: true,
-    bundleIdentifier: "your.bundle.identifier",
+    bundleIdentifier: "com.empathattic",
   },
   android: {
     adaptiveIcon: {
       foregroundImage: "./assets/icon.png",
-      backgroundColor: "#1F104A",
+      backgroundColor: "#0431e2",
     },
   },
   extra: {

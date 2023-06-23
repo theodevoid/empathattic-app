@@ -4,13 +4,20 @@ EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 
-CREATE TABLE IF NOT EXISTS "categories" (
+CREATE TABLE IF NOT EXISTS "users" (
 	"id" text PRIMARY KEY NOT NULL,
+	"full_name" text,
+	"email" text,
+	"phone" varchar(256)
+);
+
+CREATE TABLE IF NOT EXISTS "categories" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" varchar NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "campaigns" (
-	"id" text PRIMARY KEY NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"title" text NOT NULL,
 	"target_funding" integer DEFAULT 0,
 	"current_funding" integer DEFAULT 0,
@@ -22,7 +29,7 @@ CREATE TABLE IF NOT EXISTS "campaigns" (
 	"slug" text NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
-	"category_id" text
+	"category_id" uuid
 );
 
 DO $$ BEGIN
