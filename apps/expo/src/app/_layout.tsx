@@ -1,8 +1,10 @@
+import "react-native-reanimated";
+
 import React, { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import {
   SplashScreen as ExpoRouterSplashScreen,
-  Slot,
   Stack,
   useRouter,
 } from "expo-router";
@@ -33,14 +35,16 @@ const RootLayout = () => {
   return (
     <TRPCProvider>
       <SafeAreaProvider>
-        <NativeBaseProvider theme={theme}>
-          {/*
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <NativeBaseProvider theme={theme}>
+            {/*
           The Slot component displays the current page.
           It also allows you to configure your screens 
         */}
-          <StatusBar />
-          {!isLoading && <Stack screenOptions={{ headerShown: false }} />}
-        </NativeBaseProvider>
+            <StatusBar />
+            {!isLoading && <Stack screenOptions={{ headerShown: false }} />}
+          </NativeBaseProvider>
+        </GestureHandlerRootView>
       </SafeAreaProvider>
     </TRPCProvider>
   );

@@ -8,3 +8,7 @@ export const toPercentage = (
 ): string => {
   return `${Math.round(numerator / denominator)}%`;
 };
+
+export const removeNonNumericCharacters = (str: string) => {
+  return str.replace(/[^0-9]/g, "");
+};

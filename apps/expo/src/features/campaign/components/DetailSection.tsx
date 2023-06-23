@@ -15,7 +15,9 @@ export const DetailSection: React.FC<DetailSectionProps> = ({
       <Heading size="md" mb="2">
         {title}
       </Heading>
-      {children}
+      <Box bg="coolGray.200" p="2" rounded="md">
+        {children}
+      </Box>
     </Box>
   );
 };
