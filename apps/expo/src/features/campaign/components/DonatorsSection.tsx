@@ -1,4 +1,4 @@
-import { Avatar, Badge, Box, Button, HStack, Stack, Text } from "native-base";
+import { Avatar, Box, Button, HStack, Stack, Text } from "native-base";
 
 import { DetailSection } from "./DetailSection";
 

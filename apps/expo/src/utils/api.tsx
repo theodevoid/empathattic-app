@@ -52,18 +52,34 @@ export const TRPCProvider: React.FC<{ children: React.ReactNode }> = ({
   const { jwt } = useStore();
 
   const [queryClient] = React.useState(() => new QueryClient());
-  const [trpcClient] = React.useState(() =>
-    api.createClient({
-      transformer: superjson,
-      links: [
-        httpBatchLink({
-          url: `${getBaseUrl()}/api/trpc`,
-          headers: {
-            Authorization: jwt ? `Bearer ${jwt}` : undefined,
-          },
-        }),
-      ],
-    }),
+  // const [trpcClient] = React.useState(() =>
+  //   api.createClient({
+  //     transformer: superjson,
+  //     links: [
+  //       httpBatchLink({
+  //         url: `${getBaseUrl()}/api/trpc`,
+  //         headers: {
+  //           Authorization: jwt ? `Bearer ${jwt}` : undefined,
+  //         },
+  //       }),
+  //     ],
+  //   }),
+  // );
+
+  const trpcClient = React.useMemo(
+    () =>
+      api.createClient({
+        transformer: superjson,
+        links: [
+          httpBatchLink({
+            url: `${getBaseUrl()}/api/trpc`,
+            headers: {
+              Authorization: jwt ? `Bearer ${jwt}` : undefined,
+            },
+          }),
+        ],
+      }),
+    [jwt],
   );
 
   return (

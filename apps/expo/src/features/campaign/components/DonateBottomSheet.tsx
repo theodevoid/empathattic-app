@@ -1,9 +1,11 @@
 import { RefObject, useCallback, useMemo } from "react";
-import { Keyboard } from "react-native";
+import { Keyboard, StyleSheet } from "react-native";
+import * as Linking from "expo-linking";
 import { Ionicons } from "@expo/vector-icons";
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
+  BottomSheetTextInput,
 } from "@gorhom/bottom-sheet";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -15,14 +17,13 @@ import {
   HStack,
   Icon,
   IconButton,
-  Input,
-  InputGroup,
-  InputLeftAddon,
   KeyboardAvoidingView,
+  useToast,
   View,
 } from "native-base";
 import { Controller, useForm } from "react-hook-form";
 
+import { api } from "~/utils/api";
 import { removeNonNumericCharacters, toRupiah } from "~/utils/format";
 import { donationFormSchema, DonationFormValues } from "../forms/donation";
 
@@ -32,11 +33,25 @@ interface DonateBottomSheetProps {
   onDonateSuccess?: () => void;
 }
 
+const styles = StyleSheet.create({
+  bottomSheetInput: {
+    fontSize: 18,
+    fontFamily: "Inter_600SemiBold",
+    borderColor: "gray",
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    textAlign: "center",
+  },
+});
+
 export const DonateBottomSheet: React.FC<DonateBottomSheetProps> = ({
   bottomSheetRef,
   campaignId,
   onDonateSuccess = () => undefined,
 }) => {
+  const toast = useToast();
   const {
     formState: { errors },
     control,
@@ -60,13 +75,33 @@ export const DonateBottomSheet: React.FC<DonateBottomSheetProps> = ({
     [],
   );
 
+  const { mutateAsync: createDonation, isLoading } =
+    api.donation.createDonation.useMutation();
+
   const onSubmitDonation = async (values: DonationFormValues) => {
     const { amount } = values;
 
     try {
-      console.log("submit donation", amount, campaignId);
+      const donation = await createDonation({
+        amount,
+        campaignId,
+      });
+
       onDonateSuccess();
+
+      toast.show({
+        title: "Success!",
+        description: "Redirecting you to payment page...",
+        duration: 7000,
+      });
+
+      if (donation?.externalInvoiceUrl) {
+        await Linking.openURL(donation.externalInvoiceUrl);
+      }
     } catch (err) {
+      toast.show({
+        title: "Something went wrong",
+      });
       console.log(err);
     }
   };
@@ -82,7 +117,7 @@ export const DonateBottomSheet: React.FC<DonateBottomSheetProps> = ({
       snapPoints={snapPoints}
       ref={bottomSheetRef}
     >
-      <KeyboardAvoidingView>
+      <KeyboardAvoidingView behavior="padding">
         <View px="4" h="100%" pb="4">
           <HStack mb="4" position="relative">
             <Heading textAlign="center" fontSize="lg" flex={1}>
@@ -136,7 +171,7 @@ export const DonateBottomSheet: React.FC<DonateBottomSheetProps> = ({
               {toRupiah(100_000)}
             </Button>
           </HStack>
-          <Box flex={1} mt="6">
+          <Box flex={1} mt="4">
             <Controller
               control={control}
               rules={{
@@ -146,9 +181,9 @@ export const DonateBottomSheet: React.FC<DonateBottomSheetProps> = ({
               render={({ field: { value } }) => (
                 <FormControl isInvalid={!!errors.amount}>
                   <Center>
-                    <InputGroup w="70%">
-                      <InputLeftAddon>Rp</InputLeftAddon>
-                      <Input
+                    <FormControl.Label>Custom amount</FormControl.Label>
+                    <Box w="70%">
+                      <BottomSheetTextInput
                         onChangeText={(text) => {
                           setValue(
                             "amount",
@@ -156,11 +191,13 @@ export const DonateBottomSheet: React.FC<DonateBottomSheetProps> = ({
                           );
                         }}
                         keyboardType="number-pad"
-                        size="lg"
-                        w="85%"
+                        style={styles.bottomSheetInput}
                         value={value ? value.toLocaleString("id-ID") : "0"}
                       />
-                    </InputGroup>
+                    </Box>
+                    <FormControl.HelperText>
+                      IDR (Indonesian Rupiah)
+                    </FormControl.HelperText>
                     <FormControl.ErrorMessage>
                       {errors.amount?.message}
                     </FormControl.ErrorMessage>
@@ -170,6 +207,7 @@ export const DonateBottomSheet: React.FC<DonateBottomSheetProps> = ({
             />
           </Box>
           <Button
+            isLoading={isLoading}
             onPress={handleSubmit(onSubmitDonation)}
             size="lg"
             rounded="full"

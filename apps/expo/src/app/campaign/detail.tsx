@@ -40,11 +40,21 @@ const CampaignDetailScreen = () => {
     id: campaignId as string,
   });
 
+  const onDonateSuccess = () => {
+    bottomSheetRef?.current?.close();
+  };
+
   return (
-    <SafeAreaView>
+    <SafeAreaView edges={["bottom"]}>
       <View h="100%">
         <Stack.Screen
-          options={{ title: "Campaign Detail", headerShown: false }}
+          options={{
+            title: "",
+            headerShown: true,
+            contentStyle: {
+              marginBottom: 0,
+            },
+          }}
         />
         <ScrollView
           contentContainerStyle={{ paddingBottom: 40 }}
@@ -110,6 +120,7 @@ const CampaignDetailScreen = () => {
         <DonateBottomSheet
           bottomSheetRef={bottomSheetRef}
           campaignId={campaign?.id || ""}
+          onDonateSuccess={onDonateSuccess}
         />
       </View>
     </SafeAreaView>

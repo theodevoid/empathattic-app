@@ -25,7 +25,7 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
   campaign,
   onDonatePress,
 }) => {
-  const { title, currentFunding, targetFunding, id, images } = campaign;
+  const { title, currentFunding, targetFunding, images } = campaign;
 
   return (
     <Box
