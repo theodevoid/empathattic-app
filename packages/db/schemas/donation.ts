@@ -35,6 +35,7 @@ export const donation = pgTable("donations", {
   paidAt: timestamp("paid_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  status: donationStatus("status").default("AWAITING_PAYMENT"),
 });
 
 export type Donation = InferModel<typeof donation>;

@@ -42,7 +42,7 @@ const RootLayout = () => {
           It also allows you to configure your screens 
         */}
             <StatusBar />
-            {!isLoading && <Stack screenOptions={{ headerShown: false }} />}
+            {!isLoading && <Stack />}
           </NativeBaseProvider>
         </GestureHandlerRootView>
       </SafeAreaProvider>
