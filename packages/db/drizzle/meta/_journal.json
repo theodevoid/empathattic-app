@@ -36,6 +36,13 @@
       "when": 1687540058841,
       "tag": "0004_common_raider",
       "breakpoints": false
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1687597372400,
+      "tag": "0005_nappy_gamora",
+      "breakpoints": false
     }
   ]
 }

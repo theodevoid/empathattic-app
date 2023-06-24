@@ -13,7 +13,10 @@ import {
 import { LatestCampaignsSection } from "~/features/home/components/LatestCampaignsSection";
 
 const HomeScreen = () => {
-  const { data: campaigns } = api.campaign.getCampaigns.useQuery({});
+  const { data: campaigns } = api.campaign.getCampaigns.useQuery(
+    {},
+    { refetchOnWindowFocus: true },
+  );
 
   const router = useRouter();
 

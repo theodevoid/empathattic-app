@@ -1,0 +1,1 @@
+ALTER TABLE "donations" ADD COLUMN "status" "donation_status" DEFAULT 'AWAITING_PAYMENT';

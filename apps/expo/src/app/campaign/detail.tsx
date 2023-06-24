@@ -1,8 +1,9 @@
 import { useRef } from "react";
 import { Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams, useNavigation } from "expo-router";
 import BottomSheet from "@gorhom/bottom-sheet";
+import { differenceInDays } from "date-fns";
 import {
   AspectRatio,
   Box,
@@ -20,6 +21,7 @@ import {
 
 import { api } from "~/utils/api";
 import { toRupiah } from "~/utils/format";
+import { Header } from "~/components/Header";
 import {
   AboutSection,
   DonateBottomSheet,
@@ -33,6 +35,8 @@ type CampaignDetailScreenParams = {
 const { width } = Dimensions.get("window");
 
 const CampaignDetailScreen = () => {
+  const navigation = useNavigation();
+
   const { campaignId } = useLocalSearchParams<CampaignDetailScreenParams>();
   const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -50,10 +54,10 @@ const CampaignDetailScreen = () => {
         <Stack.Screen
           options={{
             title: "",
-            headerShown: true,
             contentStyle: {
               marginBottom: 0,
             },
+            header: (props) => <Header {...props} />,
           }}
         />
         <ScrollView
@@ -76,19 +80,11 @@ const CampaignDetailScreen = () => {
           <Box px="4" mt="2">
             <NBStack space="2">
               <Heading>{campaign?.title}</Heading>
-              <Text color="gray.500">31 Days left</Text>
-              <Progress
-                size="lg"
-                value={
-                  campaign?.currentFunding ||
-                  (0 / (campaign?.targetFunding || 0)) * 100
-                }
-              />
               <HStack justifyContent="space-between">
                 <NBStack alignItems="flex-start">
-                  <Text>Current funding</Text>
+                  <Text>Total funded</Text>
                   <Text fontSize="md" fontWeight="semibold" color="primary.500">
-                    {toRupiah(campaign?.currentFunding || 0)}
+                    {toRupiah(campaign?.totalFunding || 0)}
                   </Text>
                 </NBStack>
                 {!!campaign?.targetFunding && (
@@ -98,6 +94,27 @@ const CampaignDetailScreen = () => {
                       {toRupiah(100_000_000)}
                     </Text>
                   </NBStack>
+                )}
+              </HStack>
+              <Progress
+                size="lg"
+                value={
+                  campaign?.totalFunding ||
+                  (0 / (campaign?.targetFunding || 0)) * 100
+                }
+              />
+              <HStack justifyContent="space-between">
+                <NBStack alignItems="flex-start">
+                  <Text>Current available funds</Text>
+                  <Text fontSize="md" fontWeight="semibold" color="primary.500">
+                    {toRupiah(campaign?.totalFunding || 0)}
+                  </Text>
+                </NBStack>
+                {!!campaign?.endDate && (
+                  <Text color="gray.500">
+                    {differenceInDays(new Date(campaign?.endDate), new Date())}{" "}
+                    days left
+                  </Text>
                 )}
               </HStack>
             </NBStack>
