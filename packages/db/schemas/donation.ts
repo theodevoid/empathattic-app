@@ -1,4 +1,4 @@
-import { InferModel } from "drizzle-orm";
+import { InferModel, InferModelFromColumns } from "drizzle-orm";
 import {
   boolean,
   integer,
@@ -11,6 +11,12 @@ import {
 
 import { campaign } from "./campaign";
 import { user } from "./user";
+
+export enum DonationStatus {
+  AWAITING_PAYMENT = "AWAITING_PAYMENT",
+  SUCCESS = "SUCCESS",
+  FAIL = "FAIL",
+}
 
 export const donationStatus = pgEnum("donation_status", [
   "AWAITING_PAYMENT",

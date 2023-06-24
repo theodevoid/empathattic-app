@@ -1,21 +1,14 @@
 import { useRef, useState } from "react";
-import { Ionicons } from "@expo/vector-icons";
 import BottomSheet from "@gorhom/bottom-sheet";
-import {
-  Box,
-  Heading,
-  HStack,
-  Icon,
-  Pressable,
-  ScrollView,
-  Text,
-} from "native-base";
+import { Box, Heading, ScrollView } from "native-base";
+
+import { DonationStatus } from "@empathattic/db/schemas";
 
 import { BottomSheetSelect, BottomSheetSelectItem } from "~/components";
 import { FilterButton } from "~/features/donations";
 
 const DonationScreen = () => {
-  const [filteredStatus, setFilteredStatus] = useState("");
+  const [filteredStatus, setFilteredStatus] = useState<string>("ALL");
   const [filteredTime, setFilteredTime] = useState("");
 
   const statusFilterBottomSheetRef = useRef<BottomSheet>(null);
@@ -23,11 +16,19 @@ const DonationScreen = () => {
   const statusFilterOptions: BottomSheetSelectItem[] = [
     {
       label: "All Status",
-      value: "all",
+      value: "ALL",
     },
     {
       label: "Waiting for payment",
-      value: "awaiting_payment",
+      value: DonationStatus.AWAITING_PAYMENT,
+    },
+    {
+      label: "Successful",
+      value: DonationStatus.SUCCESS,
+    },
+    {
+      label: "Failed",
+      value: DonationStatus.FAIL,
     },
   ];
 
@@ -41,7 +42,7 @@ const DonationScreen = () => {
             ?.label || "All Status"}
         </FilterButton>
       </ScrollView>
-      <Box flex={1} bg="red">
+      <Box flex={1}>
         <Heading>Donation Screen</Heading>
       </Box>
       <BottomSheetSelect
