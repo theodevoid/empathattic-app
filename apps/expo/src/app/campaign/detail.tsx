@@ -35,8 +35,6 @@ type CampaignDetailScreenParams = {
 const { width } = Dimensions.get("window");
 
 const CampaignDetailScreen = () => {
-  const navigation = useNavigation();
-
   const { campaignId } = useLocalSearchParams<CampaignDetailScreenParams>();
   const bottomSheetRef = useRef<BottomSheet>(null);
 

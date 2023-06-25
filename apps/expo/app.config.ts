@@ -11,10 +11,13 @@ const defineConfig = (): ExpoConfig => ({
   splash: {
     image: "./assets/icon.png",
     resizeMode: "contain",
-    backgroundColor: "#0431e2",
+    backgroundColor: "#011357",
   },
   updates: {
-    fallbackToCacheTimeout: 0,
+    url: "https://u.expo.dev/53c6b0e7-66db-42bc-a385-a42b4f178190",
+  },
+  runtimeVersion: {
+    policy: "sdkVersion",
   },
   assetBundlePatterns: ["**/*"],
   ios: {
@@ -24,12 +27,12 @@ const defineConfig = (): ExpoConfig => ({
   android: {
     adaptiveIcon: {
       foregroundImage: "./assets/icon.png",
-      backgroundColor: "#0431e2",
+      backgroundColor: "#011357",
     },
   },
   extra: {
     eas: {
-      // projectId: "your-project-id",
+      projectId: "53c6b0e7-66db-42bc-a385-a42b4f178190",
     },
   },
   plugins: ["./expo-plugins/with-modify-gradle.js"],
