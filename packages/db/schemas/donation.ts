@@ -1,4 +1,4 @@
-import { InferModel } from "drizzle-orm";
+import { InferModel, InferModelFromColumns, relations } from "drizzle-orm";
 import {
   boolean,
   integer,
@@ -11,6 +11,12 @@ import {
 
 import { campaign } from "./campaign";
 import { user } from "./user";
+
+export enum DonationStatus {
+  AWAITING_PAYMENT = "AWAITING_PAYMENT",
+  SUCCESS = "SUCCESS",
+  FAIL = "FAIL",
+}
 
 export const donationStatus = pgEnum("donation_status", [
   "AWAITING_PAYMENT",
@@ -36,6 +42,15 @@ export const donation = pgTable("donations", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
   status: donationStatus("status").default("AWAITING_PAYMENT"),
+});
+
+export const donationRelations = relations(donation, ({ one }) => {
+  return {
+    campaign: one(campaign, {
+      fields: [donation.campaignId],
+      references: [campaign.id],
+    }),
+  };
 });
 
 export type Donation = InferModel<typeof donation>;

@@ -11,19 +11,19 @@ export type BottomSheetSelectItem = {
   value: string;
 };
 
-interface BottomSheetSelectProps {
+interface BottomSheetSelectProps<T> {
   bottomSheetRef: RefObject<BottomSheet>;
   items: BottomSheetSelectItem[];
-  onSelectItem: (value: string) => void;
+  onSelectItem: (value: T) => void;
   selectedValue?: string;
 }
 
-export const BottomSheetSelect: React.FC<BottomSheetSelectProps> = ({
+export const BottomSheetSelect = <T,>({
   bottomSheetRef,
   items,
   onSelectItem,
   selectedValue,
-}) => {
+}: BottomSheetSelectProps<T>) => {
   const snapPoints = useMemo(() => [200, 350], []);
 
   const renderBackdrop = useCallback(
@@ -46,7 +46,7 @@ export const BottomSheetSelect: React.FC<BottomSheetSelectProps> = ({
             <Pressable
               key={idx}
               onPress={() => {
-                onSelectItem(value);
+                onSelectItem(value as T);
                 bottomSheetRef.current?.close();
               }}
               _pressed={{ opacity: 0.6 }}

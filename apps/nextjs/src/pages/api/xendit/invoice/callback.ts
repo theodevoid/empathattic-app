@@ -31,7 +31,7 @@ export default async function handler(req: Request, res: NextApiResponse) {
     req.method === "POST" &&
     req.headers["x-callback-token"] === env.XENDIT_CALLBACK_KEY
   ) {
-    const { body, headers } = req;
+    const { body } = req;
 
     const { external_id: donationId, status, paid_at, amount } = body;
 
