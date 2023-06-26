@@ -16,12 +16,12 @@ export const getDonations = protectedProcedure
           DonationStatus.SUCCESS,
         ])
         .default("ALL"),
-      page: z.number().default(1),
+      cursor: z.number().default(1),
     }),
   )
   .query(async ({ ctx, input }) => {
     const { db, user } = ctx;
-    const { page, status } = input;
+    const { status, cursor } = input;
 
     const LIMIT_PER_PAGE = 5;
 
@@ -37,21 +37,21 @@ export const getDonations = protectedProcedure
     const donations = await db.query.donation.findMany({
       where: whereCondition,
       orderBy: desc(donation.createdAt),
-      offset: (page - 1) * LIMIT_PER_PAGE,
+      offset: (cursor - 1) * LIMIT_PER_PAGE,
       limit: LIMIT_PER_PAGE + 1,
       with: {
         campaign: true,
       },
     });
 
-    let hasNext = false;
+    let next = null;
 
     if (donations.length > 5) {
-      hasNext = true;
+      next = cursor + 1;
     }
 
     return {
       donations: donations.slice(0, 5),
-      hasNext,
+      next,
     };
   });

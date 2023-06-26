@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ListRenderItem } from "react-native";
 import BottomSheet from "@gorhom/bottom-sheet";
-import { Box, FlatList, ScrollView, Text } from "native-base";
+import { Box, FlatList, ScrollView, Spinner, Text } from "native-base";
 
 import { Campaign, Donation, DonationStatus } from "@empathattic/db/schemas";
 
@@ -32,36 +33,37 @@ const DonationScreen = () => {
     },
   ];
 
-  const [page, setPage] = useState<number>(1);
-  const [reachedMaxData, setReachedMaxData] = useState<boolean>(false);
-
-  const { data, refetch, isLoading, isRefetching } =
-    api.donation.getDonations.useQuery({
-      page,
+  const {
+    data,
+    isLoading,
+    isRefetching,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    refetch,
+  } = api.donation.getDonations.useInfiniteQuery(
+    {
       status: filteredStatus,
-    });
+    },
+    {
+      getNextPageParam: (lastPage) => {
+        if (lastPage.next !== null) return lastPage.next;
+      },
+    },
+  );
 
-  const [infiniteDonationsData, setInfiniteDonationsData] = useState<
-    (Donation & { campaign: Campaign })[]
-  >([]);
-
-  // append new pages to current data set
-  useEffect(() => {
-    if (data && !reachedMaxData) {
-      setInfiniteDonationsData((prev) => [...prev, ...data.donations]);
-
-      if (!data.hasNext) {
-        setReachedMaxData(true);
-      }
-    }
-  }, [data, reachedMaxData]);
-
-  // reset data when status changes
-  useEffect(() => {
-    setPage(1);
-    setInfiniteDonationsData([]);
-    setReachedMaxData(false);
-  }, [filteredStatus]);
+  const renderItem: ListRenderItem<Donation & { campaign: Campaign }> =
+    useCallback(
+      ({ item }) => (
+        <DonationCard
+          totalDonation={item.amount}
+          campaign={item.campaign}
+          donationDate={item.createdAt}
+          status={item.status as DonationStatus}
+        />
+      ),
+      [],
+    );
 
   return (
     <Box p="4" flex={1}>
@@ -75,31 +77,20 @@ const DonationScreen = () => {
       </ScrollView>
       <Box flex={1}>
         <FlatList
+          onRefresh={refetch}
           refreshing={isLoading || isRefetching}
-          onRefresh={() => {
-            setInfiniteDonationsData([]);
-            setPage(1);
-            setReachedMaxData(false);
-            void refetch();
-          }}
-          data={infiniteDonationsData}
+          data={data?.pages.map((page) => page.donations).flat()}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <DonationCard
-              totalDonation={item.amount}
-              campaign={item.campaign}
-              donationDate={item.createdAt}
-              status={item.status as DonationStatus}
-            />
-          )}
+          renderItem={renderItem}
           ItemSeparatorComponent={() => <Box my="1.5" />}
-          onEndReached={() => {
-            if (data?.hasNext) {
-              setPage((prev) => prev + 1);
-            }
+          onEndReached={async () => {
+            if (hasNextPage) await fetchNextPage();
           }}
-          onEndReachedThreshold={0.2}
+          onEndReachedThreshold={0}
           ListEmptyComponent={() => <Text>No donations found yet</Text>}
+          ListFooterComponent={
+            isFetchingNextPage ? () => <Spinner py="8" size="lg" /> : null
+          }
         />
       </Box>
       <BottomSheetSelect<DonationStatus | "ALL">
