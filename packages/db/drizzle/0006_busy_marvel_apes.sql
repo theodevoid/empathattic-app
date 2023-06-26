@@ -1,0 +1,1 @@
+ALTER TABLE "users" ADD COLUMN "total_donation" integer DEFAULT 0;
