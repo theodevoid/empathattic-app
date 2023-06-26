@@ -19,6 +19,7 @@ interface DonationCardProps {
   status: DonationStatus;
   campaign: Campaign;
   totalDonation: number;
+  onViewDetailPress: () => void;
 }
 
 export const DonationCard: React.FC<DonationCardProps> = ({
@@ -26,6 +27,7 @@ export const DonationCard: React.FC<DonationCardProps> = ({
   status,
   campaign,
   totalDonation,
+  onViewDetailPress,
 }) => {
   return (
     <Stack
@@ -57,6 +59,7 @@ export const DonationCard: React.FC<DonationCardProps> = ({
           <Box>
             <HStack>
               <Button
+                onPress={onViewDetailPress}
                 size="xs"
                 variant="solid"
                 py="1"

@@ -7,7 +7,7 @@ interface DonationCardBadgeProps {
 }
 
 export const DonationCardBadge: React.FC<DonationCardBadgeProps> = ({
-  status,
+  status = DonationStatus.AWAITING_PAYMENT,
 }) => {
   const styles = {
     [DonationStatus.AWAITING_PAYMENT]: {
