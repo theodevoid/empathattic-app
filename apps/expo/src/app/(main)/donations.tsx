@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { ListRenderItem } from "react-native";
+import { useRouter } from "expo-router";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Box, FlatList, ScrollView, Spinner, Text } from "native-base";
 
@@ -10,6 +11,8 @@ import { BottomSheetSelect, BottomSheetSelectItem } from "~/components";
 import { DonationCard, FilterButton } from "~/features/donations";
 
 const DonationScreen = () => {
+  const router = useRouter();
+
   const [filteredStatus, setFilteredStatus] = useState<DonationStatus | "ALL">(
     "ALL",
   );
@@ -60,6 +63,14 @@ const DonationScreen = () => {
           campaign={item.campaign}
           donationDate={item.createdAt}
           status={item.status as DonationStatus}
+          onViewDetailPress={() =>
+            router.push({
+              pathname: "/donations/detail",
+              params: {
+                donationId: item.id,
+              },
+            })
+          }
         />
       ),
       [],
