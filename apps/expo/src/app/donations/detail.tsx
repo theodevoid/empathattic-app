@@ -3,7 +3,6 @@ import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { format } from "date-fns";
 import {
   AspectRatio,
-  Box,
   Button,
   Divider,
   Heading,
@@ -12,6 +11,7 @@ import {
   Stack as NBStack,
   Pressable,
   ScrollView,
+  Skeleton,
   Text,
 } from "native-base";
 
@@ -30,7 +30,7 @@ const DonationDetailScreen = () => {
   const router = useRouter();
   const { donationId } = useLocalSearchParams<DonationDetailScreenParams>();
 
-  const { data: donation } = api.donation.getDonationById.useQuery({
+  const { data: donation, isLoading } = api.donation.getDonationById.useQuery({
     donationId: donationId as string,
   });
 
@@ -69,18 +69,22 @@ const DonationDetailScreen = () => {
 
       <NBStack p="4" space="4" alignItems="center">
         <HStack space="2">
-          <AspectRatio ratio={16 / 9} flex={1}>
-            <Image
-              source={{
-                uri: donation?.campaign.images[0] || "",
-              }}
-              alt={donation?.campaign.title}
-            />
-          </AspectRatio>
+          <Skeleton flex={1} isLoaded={!!donation}>
+            <AspectRatio ratio={16 / 9} flex={1}>
+              <Image
+                source={{
+                  uri: donation?.campaign.images[0] || "",
+                }}
+                alt={donation?.campaign.title}
+              />
+            </AspectRatio>
+          </Skeleton>
 
-          <NBStack flex={2} justifyContent="space-between">
-            <Heading size="sm">{donation?.campaign.title}</Heading>
-          </NBStack>
+          <Skeleton flex={2} isLoaded={!!donation}>
+            <NBStack flex={2} justifyContent="space-between">
+              <Heading size="sm">{donation?.campaign.title}</Heading>
+            </NBStack>
+          </Skeleton>
         </HStack>
 
         <Pressable
@@ -105,21 +109,27 @@ const DonationDetailScreen = () => {
         <NBStack space="2">
           <HStack justifyContent="space-between">
             <Text>Donation Total</Text>
-            <Text>{toRupiah(donation?.amount || 0)}</Text>
+            <Skeleton.Text w={70} isLoaded={!!donation} lines={1}>
+              <Text>{toRupiah(donation?.amount || 0)}</Text>
+            </Skeleton.Text>
           </HStack>
           <HStack justifyContent="space-between">
             <Text>Platform Fee</Text>
-            <Text>{toRupiah(donation?.platformFee || 0)}</Text>
+            <Skeleton.Text isLoaded={!!donation} lines={1} w={70}>
+              <Text>{toRupiah(donation?.platformFee || 0)}</Text>
+            </Skeleton.Text>
           </HStack>
           <HStack justifyContent="space-between">
             <Text fontSize="md" fontWeight="bold">
               Donation Total
             </Text>
-            <Text fontSize="md" fontWeight="bold">
-              {toRupiah(
-                (donation?.amount || 0) + (donation?.platformFee || 0) || 0,
-              )}
-            </Text>
+            <Skeleton.Text w={70} isLoaded={!!donation} lines={1}>
+              <Text fontSize="md" fontWeight="bold">
+                {toRupiah(
+                  (donation?.amount || 0) + (donation?.platformFee || 0) || 0,
+                )}
+              </Text>
+            </Skeleton.Text>
           </HStack>
         </NBStack>
 

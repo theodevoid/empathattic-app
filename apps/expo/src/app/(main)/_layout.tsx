@@ -30,7 +30,9 @@ const MainLayout = () => {
         <Tabs.Screen
           name="index"
           options={{
-            href: "/",
+            href: {
+              pathname: "/",
+            },
             tabBarIcon: ({ focused }) => (
               <Icon
                 size="xl"
@@ -62,7 +64,9 @@ const MainLayout = () => {
         <Tabs.Screen
           name="profile"
           options={{
-            href: "/profile",
+            href: {
+              pathname: "/profile",
+            },
             tabBarIcon: ({ focused }) => (
               <Icon
                 size="xl"

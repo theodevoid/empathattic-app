@@ -5,9 +5,13 @@ import { LoginFormValues } from "../forms/login";
 
 interface LoginFormProps {
   onSubmitLogin: () => void;
+  loading: boolean;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onSubmitLogin }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({
+  onSubmitLogin,
+  loading,
+}) => {
   const { formState, setValue } = useFormContext<LoginFormValues>();
 
   return (
@@ -38,7 +42,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmitLogin }) => {
           {formState.errors.password?.message}
         </FormControl.ErrorMessage>
       </FormControl>
-      <Button onPress={onSubmitLogin} mt="4" colorScheme="primary">
+      <Button
+        isLoading={loading}
+        onPress={onSubmitLogin}
+        mt="4"
+        colorScheme="primary"
+      >
         Sign in
       </Button>
     </>

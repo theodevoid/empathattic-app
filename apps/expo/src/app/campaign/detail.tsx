@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Stack, useLocalSearchParams, useNavigation } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { differenceInDays } from "date-fns";
 import {

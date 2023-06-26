@@ -30,9 +30,7 @@ const HomeScreen = () => {
           paddingBottom: Platform.OS === "ios" ? 100 : 150,
         }}
       >
-        <Box mb="5">
-          <TotalDonationWidget />
-        </Box>
+        <Box mb="5">{/* <TotalDonationWidget /> */}</Box>
 
         <Box mb="6">
           <Heading mx="4" size="md" mb="2">
