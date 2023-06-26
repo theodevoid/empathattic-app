@@ -5,6 +5,7 @@ import { eq, sql } from "@empathattic/db/drizzle-orm";
 import {
   campaign as campaignSchema,
   donation as donationSchema,
+  user,
 } from "@empathattic/db/schemas";
 
 import { env } from "~/env.mjs";
@@ -63,6 +64,13 @@ export default async function handler(req: Request, res: NextApiResponse) {
           totalFunding: sql`${campaignSchema.totalFunding} + ${amount}`,
         })
         .where(eq(campaignSchema.id, donation.campaignId));
+
+      await db
+        .update(user)
+        .set({
+          totalDonation: sql`${user.totalDonation} + ${amount}`,
+        })
+        .where(eq(user.id, donation.userId));
     } else if (status === "EXPIRED") {
       await db
         .update(donationSchema)
