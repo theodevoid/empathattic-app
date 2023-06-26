@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link as ExpoLink, Stack, useRouter } from "expo-router";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,6 +24,8 @@ const LoginScreen = () => {
 
   const { user } = useStore();
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const formMethods = useForm<LoginFormValues>({
     defaultValues: {
       email: "",
@@ -34,11 +36,14 @@ const LoginScreen = () => {
   });
 
   const onSubmitLogin = async (values: LoginFormValues) => {
+    setLoading(true);
     try {
-      await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithPassword({
         email: values.email,
         password: values.password,
       });
+
+      if (error) throw error;
 
       router.replace("/");
     } catch (error) {
@@ -46,6 +51,8 @@ const LoginScreen = () => {
         title: "Login Failed",
         description: "Something went wrong",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -86,6 +93,7 @@ const LoginScreen = () => {
           <VStack space={3} mt="5">
             <FormProvider {...formMethods}>
               <LoginForm
+                loading={loading}
                 onSubmitLogin={formMethods.handleSubmit(onSubmitLogin)}
               />
             </FormProvider>
