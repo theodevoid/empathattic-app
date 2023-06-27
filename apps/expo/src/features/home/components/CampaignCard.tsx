@@ -61,8 +61,8 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
             </HStack>
           </Stack>
         </Stack>
-        <Button onPress={onDonatePress} rounded="xl" mt="6">
-          Donate
+        <Button onPress={onDonatePress} rounded="xl" mt="6" variant="ghost">
+          View Campaign
         </Button>
       </Box>
     </Box>

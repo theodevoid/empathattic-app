@@ -19,6 +19,10 @@ const ProfileScreen = () => {
 
   const { data } = api.user.getUser.useQuery();
 
+  const onPressEditProfile = () => {
+    router.push("/profile-settings/edit-profile");
+  };
+
   const signOut = async () => {
     try {
       await supabase.auth.signOut();
@@ -36,7 +40,9 @@ const ProfileScreen = () => {
           <Heading size="md">{data?.fullName || "(No name)"}</Heading>
           <Heading size="sm">{user?.email}</Heading>
         </NBStack>
-        <Button variant="ghost">Edit Profile</Button>
+        <Button onPress={onPressEditProfile} variant="ghost">
+          Edit Profile
+        </Button>
       </HStack>
 
       <NBStack>

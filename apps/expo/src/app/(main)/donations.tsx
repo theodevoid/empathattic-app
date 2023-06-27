@@ -77,7 +77,7 @@ const DonationScreen = () => {
     );
 
   return (
-    <Box p="4" flex={1}>
+    <Box p="4" h="100%">
       <ScrollView horizontal maxH={8} mb="4">
         <FilterButton
           onPress={() => statusFilterBottomSheetRef.current?.expand()}
