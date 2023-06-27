@@ -28,12 +28,11 @@ interface Request extends NextApiRequest {
 }
 
 export default async function handler(req: Request, res: NextApiResponse) {
+  res.status(200).send("OK");
   if (
     req.method === "POST" &&
     req.headers["x-callback-token"] === env.XENDIT_CALLBACK_KEY
   ) {
-    res.status(200).send("OK");
-
     const { body } = req;
 
     const { external_id: donationId, status, paid_at, amount } = body;
