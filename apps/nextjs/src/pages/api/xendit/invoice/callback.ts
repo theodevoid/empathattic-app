@@ -32,6 +32,8 @@ export default async function handler(req: Request, res: NextApiResponse) {
     req.method === "POST" &&
     req.headers["x-callback-token"] === env.XENDIT_CALLBACK_KEY
   ) {
+    res.status(200).send("OK");
+
     const { body } = req;
 
     const { external_id: donationId, status, paid_at, amount } = body;
@@ -79,7 +81,5 @@ export default async function handler(req: Request, res: NextApiResponse) {
         })
         .where(eq(donationSchema.id, donationId));
     }
-
-    res.status(200).send("OK");
   }
 }
