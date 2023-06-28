@@ -30,6 +30,7 @@ const defineConfig = (): ExpoConfig => ({
       foregroundImage: "./assets/icon.png",
       backgroundColor: "#011357",
     },
+    package: "com.empathattic.app",
   },
   extra: {
     eas: {
