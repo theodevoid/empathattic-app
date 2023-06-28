@@ -8,20 +8,24 @@ const STORAGE_KEY = "empathattic-app-storage";
 
 export type GlobalStore = AuthSlice;
 
-export const useStore = create<
-  GlobalStore,
-  [["zustand/persist", Pick<GlobalStore, "user">]]
->(
-  persist(
-    (...a) => ({
-      ...createAuthSlice(...a),
-    }),
-    {
-      name: STORAGE_KEY,
-      partialize: (state) => ({
-        user: state.user,
-      }),
-      storage: createJSONStorage(() => AsyncStorage),
-    },
-  ),
-);
+// export const useStore = create<
+//   GlobalStore,
+//   [["zustand/persist", Pick<GlobalStore, "user">]]
+// >(
+//   persist(
+//     (...a) => ({
+//       ...createAuthSlice(...a),
+//     }),
+//     {
+//       name: STORAGE_KEY,
+//       partialize: (state) => ({
+//         user: state.user,
+//       }),
+//       storage: createJSONStorage(() => AsyncStorage),
+//     },
+//   ),
+// );
+
+export const useStore = create<GlobalStore>((...actions) => ({
+  ...createAuthSlice(...actions),
+}));
