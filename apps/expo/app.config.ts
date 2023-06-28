@@ -23,6 +23,7 @@ const defineConfig = (): ExpoConfig => ({
   ios: {
     supportsTablet: false,
     bundleIdentifier: "com.empathattic",
+    buildNumber: "3",
   },
   android: {
     adaptiveIcon: {
