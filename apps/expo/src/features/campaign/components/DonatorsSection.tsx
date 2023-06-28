@@ -16,21 +16,29 @@ export const DonatorsSection: React.FC<DonatorsSectionProps> = ({
   return (
     <DetailSection title="Donators">
       {numberOfDonators ? (
-        <HStack justifyContent="space-between">
-          <Stack>
-            <Avatar.Group flexDirection="row" mx="4">
-              {initials.map((initial, idx) => {
-                return <Avatar key={idx}>{initial}</Avatar>;
-              })}
-            </Avatar.Group>
-            <Box px="2" py="1" rounded="md">
-              <Text>{numberOfDonators} people have donated</Text>
-            </Box>
-          </Stack>
-          <Button onPress={() => console.log(campaignId)} variant="ghost">
-            View all
-          </Button>
-        </HStack>
+        // <HStack justifyContent="space-between">
+        //   <Stack>
+        //     <Avatar.Group flexDirection="row" mx="4">
+        //       {initials.map((initial, idx) => {
+        //         return <Avatar key={idx}>{initial}</Avatar>;
+        //       })}
+        //     </Avatar.Group>
+        //     <Box px="2" py="1" rounded="md">
+        //       <Text>{numberOfDonators} people have donated</Text>
+        //     </Box>
+        //   </Stack>
+        //   <Button onPress={() => console.log(campaignId)} variant="ghost">
+        //     View all
+        //   </Button>
+        // </HStack>
+        <Stack alignItems="center">
+          <Text fontSize="md" fontWeight="bold" textAlign="center">
+            Around {numberOfDonators} people
+          </Text>
+          <Text fontSize="md" fontWeight="bold" textAlign="center">
+            have supported this campaign! 🫶
+          </Text>
+        </Stack>
       ) : (
         <Text fontWeight="semibold" fontSize="md">
           Be the first one to donate!

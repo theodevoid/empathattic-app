@@ -42,6 +42,10 @@ const CampaignDetailScreen = () => {
     id: campaignId as string,
   });
 
+  const { data: donators } = api.campaign.getDonators.useQuery({
+    campaignId: campaignId as string,
+  });
+
   const onDonateSuccess = () => {
     bottomSheetRef?.current?.close();
   };
@@ -120,7 +124,7 @@ const CampaignDetailScreen = () => {
             <AboutSection description={campaign?.description || ""} />
 
             <DonatorsSection
-              numberOfDonators={5}
+              numberOfDonators={donators?.donatorCount || 0}
               initials={["TM", "AB", "CD"]}
               campaignId={campaign?.id || ""}
             />
