@@ -74,7 +74,7 @@ export const TRPCProvider: React.FC<{ children: React.ReactNode }> = ({
           httpBatchLink({
             url: `${getBaseUrl()}/api/trpc`,
             headers: {
-              Authorization: jwt ? `Bearer ${jwt}` : undefined,
+              "x-authorization": jwt ? `Bearer ${jwt}` : undefined,
             },
           }),
         ],

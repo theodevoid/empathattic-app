@@ -59,7 +59,7 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
     },
   );
 
-  const token = opts.req.headers.authorization;
+  const token = opts.req.headers["x-authorization"] as string;
   const jwt = token?.split(" ")[1];
 
   console.log(jwt);
