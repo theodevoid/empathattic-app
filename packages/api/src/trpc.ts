@@ -52,14 +52,23 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL as string,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string,
+    {
+      auth: {
+        persistSession: false,
+      },
+    },
   );
 
   const token = opts.req.headers.authorization;
   const jwt = token?.split(" ")[1];
 
+  console.log(jwt);
+
   const {
     data: { user },
   } = await supabase.auth.getUser(jwt);
+
+  console.log(user);
 
   return createInnerTRPCContext({
     user,
