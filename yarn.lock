@@ -5368,7 +5368,7 @@ dreamopt@~0.8.0:
   dependencies:
     wordwrap ">=0.0.2"
 
-drizzle-kit@^0.27.0:
+drizzle-kit@^0.19.0:
   version "0.19.2"
   resolved "https://registry.yarnpkg.com/drizzle-kit/-/drizzle-kit-0.19.2.tgz#ee31a6489cd261f0551177a37742b4dfa0d7fa84"
   integrity sha512-o+T/+Xc6hlLj2ocvGEo3kyWgTIAFjmsVK/HdBjU7gmbolmFZHv6T3lhaAsAD4mWfOX69uC7IggCmIqLq+zcM4Q==
