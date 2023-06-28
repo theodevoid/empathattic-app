@@ -1,5 +1,6 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Link, Stack } from "expo-router";
+import { Link, Stack, useRouter } from "expo-router";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
   Button,
@@ -9,10 +10,55 @@ import {
   HStack,
   Input,
   Text,
+  useToast,
   VStack,
 } from "native-base";
+import { FormProvider, useForm } from "react-hook-form";
+
+import { RegisterForm } from "~/features/auth/components";
+import {
+  registerFormSchema,
+  RegisterFormValues,
+} from "~/features/auth/forms/register";
+import { supabase } from "~/lib/supabase";
 
 const RegisterScreen = () => {
+  const router = useRouter();
+  const toast = useToast();
+
+  const formMethods = useForm<RegisterFormValues>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: zodResolver(registerFormSchema),
+    mode: "onChange",
+  });
+
+  const onSubmitRegister = async (values: RegisterFormValues) => {
+    try {
+      const { error } = await supabase.auth.signUp({
+        email: values.email,
+        password: values.password,
+      });
+
+      if (error) throw error;
+
+      toast.show({
+        title: "Account created!",
+        description: "Log in to your account to continue",
+        duration: 7000,
+      });
+      router.replace("/login");
+    } catch (error) {
+      console.log(error);
+      toast.show({
+        title: "Login Failed",
+        description: "Something went wrong",
+      });
+    }
+  };
+
   return (
     <SafeAreaView>
       <Stack.Screen options={{ title: "Login ", headerShown: false }} />
@@ -41,21 +87,12 @@ const RegisterScreen = () => {
           </Heading>
 
           <VStack space={3} mt="5">
-            <FormControl>
-              <FormControl.Label>Email</FormControl.Label>
-              <Input />
-            </FormControl>
-            <FormControl>
-              <FormControl.Label>Phone Number</FormControl.Label>
-              <Input keyboardType="number-pad" />
-            </FormControl>
-            <FormControl>
-              <FormControl.Label>Password</FormControl.Label>
-              <Input type="password" />
-            </FormControl>
-            <Button mt="2" colorScheme="primary">
-              Sign in
-            </Button>
+            <FormProvider {...formMethods}>
+              <RegisterForm
+                onSubmitRegister={formMethods.handleSubmit(onSubmitRegister)}
+                loading={formMethods.formState.isSubmitting}
+              />
+            </FormProvider>
             <HStack mt="6" justifyContent="center">
               <Text
                 fontSize="sm"
