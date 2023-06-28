@@ -21,7 +21,7 @@ const defineConfig = (): ExpoConfig => ({
   },
   assetBundlePatterns: ["**/*"],
   ios: {
-    supportsTablet: true,
+    supportsTablet: false,
     bundleIdentifier: "com.empathattic",
   },
   android: {
