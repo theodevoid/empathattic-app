@@ -29,6 +29,11 @@
       "extends": "base",
       "channel": "production",
       "autoIncrement": true
+    },
+    "default": {
+      "extends": "base",
+      "channel": "default",
+      "autoIncrement": true
     }
   },
   "submit": {

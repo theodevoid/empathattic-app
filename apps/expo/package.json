@@ -1,7 +1,7 @@
 {
   "name": "@empathattic/expo",
   "version": "0.1.0",
-  "main": "index.tsx",
+  "main": "index.js",
   "scripts": {
     "clean": "git clean -xdf .expo .turbo node_modules",
     "dev": "expo start --ios",
@@ -74,5 +74,5 @@
     "tailwindcss": "^3.3.2",
     "typescript": "^4.9.4"
   },
-  "private": true
+  "private": false
 }

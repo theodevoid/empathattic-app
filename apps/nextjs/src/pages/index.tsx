@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import { Inter, Raleway } from "next/font/google";
 import Head from "next/head";
+import Image from "next/image";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,9 +26,9 @@ const Home: NextPage = () => {
       <main
         className={`${inter.variable} ${raleway.variable} font-heading mx-auto px-10 pb-10 md:container`}
       >
-        <div className="flex min-h-[85vh] flex-col items-center justify-center text-center">
+        <div className="flex min-h-[65vh] flex-col items-center justify-center text-center">
           <div className="flex flex-col items-center justify-center ">
-            <p className="max-w-4xl text-4xl font-extrabold md:text-6xl">
+            <p className="max-w-4xl text-4xl font-extrabold  md:text-6xl">
               Empathizing and taking action.{" "}
               <span className="text-[#0431e2]">EmpathAttic.</span>
             </p>
@@ -36,8 +37,26 @@ const Home: NextPage = () => {
               <br />
               An attic to gather those who want to lend a helping hand.
             </p>
-            <div className="mt-12 font-sans">
-              <p className="text-lg font-bold">Available on both platforms</p>
+          </div>
+        </div>
+        <div className="mt-12 text-center font-sans">
+          <p className="text-lg font-bold">Currently only available on Expo.</p>
+          <div className="mt-4 flex flex-col items-center">
+            <p>Scan the QR Code to access the app through Expo Go</p>
+            <Image
+              src="/empathattic-expo-qr.svg"
+              alt="expo-qr"
+              width={350}
+              height={350}
+            />
+            <a
+              className="font-semibold text-blue-500 underline"
+              href="exp://u.expo.dev/53c6b0e7-66db-42bc-a385-a42b4f178190?channel-name=main&runtime-version=exposdk%3A48.0.0"
+            >
+              or tap on this link
+            </a>
+          </div>
+          {/* <p className="text-lg font-bold">Available on both platforms</p>
               <div className="mt-4 grid grid-cols-2 gap-4 font-sans">
                 <a
                   href="google.com"
@@ -51,9 +70,7 @@ const Home: NextPage = () => {
                 >
                   iOS
                 </a>
-              </div>
-            </div>
-          </div>
+              </div> */}
         </div>
         <div className="flex min-h-[115vh] flex-col items-center justify-center">
           <p className="font-heading pt-12 text-center text-3xl font-extrabold md:text-5xl">

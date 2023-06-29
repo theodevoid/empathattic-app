@@ -1,8 +1,10 @@
 import type { ExpoConfig } from "@expo/config";
 
 const defineConfig = (): ExpoConfig => ({
-  name: "Empathattic",
+  name: "EmpathAttic",
   slug: "empathattic",
+  owner: "theodevoid",
+  description: "Personal crowdfunding application",
   scheme: "empathattic",
   version: "1.0.0",
   orientation: "portrait",
@@ -38,6 +40,7 @@ const defineConfig = (): ExpoConfig => ({
     },
   },
   plugins: ["./expo-plugins/with-modify-gradle.js"],
+  privacy: "public",
 });
 
 export default defineConfig;
